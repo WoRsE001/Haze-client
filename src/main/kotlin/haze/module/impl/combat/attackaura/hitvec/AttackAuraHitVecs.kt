@@ -1,0 +1,24 @@
+package haze.module.impl.combat.attackaura.hitvec
+
+import haze.utility.math.Vec3f
+import haze.utility.rotation.rotation
+import net.minecraft.world.entity.LivingEntity
+
+// i regret everything, i've done, SCWGxD (05.02.2026:16:25)
+object BodyPartHitVec : AttackAuraHitVec("Head") {
+    override fun point(from: LivingEntity, to: LivingEntity): Vec3f {
+        return Vec3f(to.eyePosition)
+    }
+}
+
+object BestHitVec : AttackAuraHitVec("Best") {
+    override fun point(from: LivingEntity, to: LivingEntity): Vec3f {
+        return Vec3f(from.eyePosition).coerceIn(to.boundingBox)
+    }
+}
+
+object NearestHitVec : AttackAuraHitVec("Nearest") {
+    override fun point(from: LivingEntity, to: LivingEntity): Vec3f {
+        return from.rotation.coerceIn(to.boundingBox).asVec().toVec3f() + Vec3f(from.eyePosition)
+    }
+}
