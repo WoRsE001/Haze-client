@@ -3,16 +3,15 @@
 	"id": "haze-client",
 	"version": "${version}",
 	"name": "Haze client",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Minecraft 1.21.11 multi server hack",
 	"authors": [
-		"Me!"
+		"SCWGxD and Dicves"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"email": "https://fabricmc.net/"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/haze-client/icon.png",
+	"icon": "mod_icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [

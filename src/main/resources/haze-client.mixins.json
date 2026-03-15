@@ -8,15 +8,7 @@
     "EntityMixin",
     "LivinEntityMixin",
     "PlayerMixin",
-    "accessor.LivingEntityAccessor"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  },
-  "overwrites": {
-    "requireAnnotations": true
-  },
-  "client": [
+    "accessor.LivingEntityAccessor",
     "CameraMixin",
     "ClientPacketListenerMixin",
     "DeltaTrackerTimerMixin",
@@ -33,5 +25,11 @@
     "accessor.BufferBuilderAccessor",
     "accessor.MinecraftAccessor",
     "accessor.MultiPlayerGameModeAccessor"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
 }

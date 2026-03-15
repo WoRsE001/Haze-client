@@ -1,5 +1,6 @@
 package haze.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import haze.HazeClient;
 import haze.event.impl.GameLoopEvent;
 import haze.event.impl.LegitClickTimingEvent;
@@ -35,6 +36,16 @@ public class MinecraftMixin {
     @Shadow
     @Nullable
     public LocalPlayer player;
+
+    @ModifyExpressionValue(method = "createTitle", at = @At(value = "NEW", target = "(Ljava/lang/String;)Ljava/lang/StringBuilder;"))
+    private StringBuilder editMCTitle(StringBuilder original) {
+        return new StringBuilder(HazeClient.NAME + " client");
+    }
+
+    @ModifyExpressionValue(method = "createTitle", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/ModCheck;shouldReportAsModified()Z"))
+    private boolean editModifesgsghrd(boolean original) {
+        return false;
+    }
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void callPreTickEvent(CallbackInfo ci) {
