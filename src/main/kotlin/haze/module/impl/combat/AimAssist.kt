@@ -8,7 +8,7 @@ import haze.module.Module
 import haze.utility.player
 import haze.utility.rotation.rotation
 import haze.utility.rotation.rotationTo
-import haze.utility.rotation.scale
+import haze.utility.rotation.expand
 import haze.utility.target.TargetFinder
 import net.minecraft.world.entity.LivingEntity
 import kotlin.math.roundToLong
@@ -33,7 +33,7 @@ object AimAssist : Module(
         }
 
         if (event is CursorDeltaEvent && target != null) {
-            val point = player.rotation.coerceIn(target!!.boundingBox.scale(0.9, 0.9)).asVec().toVec3f()
+            val point = player.rotation.coerceIn(target!!.boundingBox.expand(0.9, 0.9)).toVec3f()
             val deltaToTarget = (rotationTo(point) - player.rotation).wrapped()
 
             event.accumulatedDX = if (deltaToTarget.yaw.sign.toDouble() == event.accumulatedDX.sign)

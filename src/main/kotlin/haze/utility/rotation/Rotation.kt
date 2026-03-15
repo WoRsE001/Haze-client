@@ -6,8 +6,10 @@ import haze.utility.math.roundTo
 import net.minecraft.util.Mth
 import net.minecraft.world.phys.AABB
 import kotlin.math.abs
+import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.max
+import kotlin.math.sin
 
 // created by dicves_recode on 30.11.2025
 open class Rotation(var pitch: Float, var yaw: Float) {
@@ -125,6 +127,16 @@ open class Rotation(var pitch: Float, var yaw: Float) {
             pitch.coerceIn(minX, maxX),
             wrapped().yaw.coerceIn(minY, maxY)
         )
+    }
+
+    fun toVec3f(): Vec3f {
+        val h = pitch * (Math.PI / 180.0);
+        val i = -yaw * (Math.PI / 180.0);
+        val j = cos(i);
+        val k = sin(i);
+        val l = cos(h);
+        val m = sin(h);
+        return Vec3f(k * l, -m, j * l)
     }
 
     companion object {

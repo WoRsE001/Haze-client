@@ -40,14 +40,4 @@ class Vec2f(var x: Float, var y: Float) {
         x /= factor
         y /= factor
     }
-
-    fun toVec3f(): Vec3f {
-        val h = x * (Math.PI / 180.0);
-        val i = -y * (Math.PI / 180.0);
-        val j = cos(i);
-        val k = sin(i);
-        val l = cos(h);
-        val m = sin(h);
-        return Vec3f(k * l, -m, j * l)
-    }
 }

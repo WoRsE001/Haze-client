@@ -14,12 +14,13 @@ object AttackAuraHitVecProcessing : ConfigureAble("Hit vector") {
 
     fun process(from: LivingEntity, to: LivingEntity): Vec3f {
         val point = Vec3f(0f, 0f, 0f)
+        val sum = hitVecs.sumOf { it.factor }
 
         for (hitVec in hitVecs) {
-            point += hitVec.point(from, to)
+            point += hitVec.point(from, to) * hitVec.factor.toFloat()
         }
 
-        point /= hitVecs.size.toFloat()
+        point /= sum.toFloat()
 
         return point
     }

@@ -20,7 +20,7 @@ fun yawTo(point: Vec3f) = yawFromDiff(point - Vec3f(player.eyePosition))
 
 fun rotationTo(point: Vec3f) = Rotation(pitchTo(point), yawTo(point))
 
-fun AABB.scale(xz: Double, y: Double): AABB {
+fun AABB.expand(xz: Double, y: Double): AABB {
     val xzHalf = xz / 2.0
     val yHalf = y / 2.0
 

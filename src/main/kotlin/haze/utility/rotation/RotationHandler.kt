@@ -14,7 +14,7 @@ object RotationHandler {
     fun tick() {
         rotateAbles.forEach {
             if (it.shouldRotate()) {
-                CameraRotation.unlocking = true
+                //CameraRotation.unlocking = true
                 it.rotate()
                 return
             }
