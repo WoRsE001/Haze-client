@@ -1,6 +1,7 @@
 package haze.module.impl.combat.attackaura.hitvec
 
 import haze.utility.math.Vec3f
+import haze.utility.rotation.CameraRotation
 import haze.utility.rotation.rotation
 import haze.utility.rotation.expand
 import net.minecraft.world.entity.LivingEntity
@@ -20,6 +21,6 @@ object BestHitVec : AttackAuraHitVec("Best") {
 
 object NearestHitVec : AttackAuraHitVec("Nearest") {
     override fun point(from: LivingEntity, to: LivingEntity): Vec3f {
-        return from.rotation.coerceIn(to.boundingBox.expand(expandHitboxXZ, expandHitboxY)).toVec3f() + Vec3f(from.eyePosition)
+        return CameraRotation.coerceIn(to.boundingBox.expand(expandHitboxXZ, expandHitboxY)).toVec3f() + Vec3f(from.eyePosition)
     }
 }

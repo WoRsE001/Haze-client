@@ -29,6 +29,6 @@ public class BlockCollisionsMixin {
         BlockShapeEvent.INSTANCE.setShape(original);
         BlockShapeEvent.INSTANCE.call();
 
-        return original;
+        return BlockShapeEvent.INSTANCE.getShape();
     }
 }

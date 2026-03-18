@@ -12,6 +12,7 @@ import haze.module.impl.world.FastBreak
 import haze.module.impl.world.FastPlace
 import haze.module.impl.world.Fucker
 import haze.module.impl.world.PacketMine
+import haze.module.impl.world.Phase
 import haze.module.impl.world.Scaffold
 import haze.setting.SaveLoadAble
 import kotlinx.serialization.json.JsonObject
@@ -67,6 +68,7 @@ object Modules : SaveLoadAble, KeySaveLoadAble {
         AutoTool
         ChestStealer
         FastUse
+        InventoryCleaner
         NoFall
         Timer
 
@@ -85,6 +87,7 @@ object Modules : SaveLoadAble, KeySaveLoadAble {
         FastPlace
         Fucker
         PacketMine
+        Phase
         Scaffold
     }
 

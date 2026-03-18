@@ -113,7 +113,7 @@ open class ConfigureAble(
     fun list(
         name: String,
         parent: ConfigureAble = this
-    )  = ChoiceValue(name).apply {
+    )  = ChoiceValue(name, parent).apply {
         parent.value.add(this)
     }
 

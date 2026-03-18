@@ -1,5 +1,7 @@
 package haze.setting.value
 
+import haze.setting.ConfigureAble
+import haze.setting.ToggleAbleConfigureAble
 import haze.setting.value.ChoiceValue.SubMode
 import haze.utility.math.Rect
 import haze.utility.mc
@@ -9,13 +11,11 @@ import net.minecraft.client.input.MouseButtonEvent
 import kotlin.reflect.KProperty
 
 // испорченно SCWGxD в 31.01.2026:9:45
-class ChoiceValue(name: String) : Value<SubMode?>(name, null) {
+class ChoiceValue(name: String, val parent: ConfigureAble) : Value<SubMode?>(name, null) {
     override var rect = Rect(0f, 0f, 0f, 0f)
 
     val list = mutableListOf<SubMode>()
     var isShowChoices = false
-
-    fun subMode(name: String) = SubMode(name, this)
 
     override var json: JsonObject
         get() = buildJsonObject {
@@ -67,6 +67,8 @@ class ChoiceValue(name: String) : Value<SubMode?>(name, null) {
         return false
     }
 
+    fun subMode(name: String) = SubMode(name, this)
+
     open class SubMode(val name: String, val parent: ChoiceValue) {
         init {
             parent.list.add(this)
@@ -78,5 +80,72 @@ class ChoiceValue(name: String) : Value<SubMode?>(name, null) {
         fun selected() = this == parent.value
 
         fun select() = apply { parent.value = this }
+
+        fun boolean(
+            name: String,
+            default: Boolean,
+            parent: ConfigureAble = this.parent.parent
+        ) = BooleanValue(name, default).apply {
+            parent.get().add(this)
+            visible { selected() }
+        }
+
+        fun list(
+            name: String,
+            parent: ConfigureAble = this.parent.parent
+        ) = ChoiceValue(name, parent).apply {
+            parent.get().add(this)
+            visible { selected() }
+        }
+
+        fun numberRange(
+            name: String,
+            default: ClosedFloatingPointRange<Double>,
+            range: ClosedFloatingPointRange<Double>,
+            step: Double,
+            suffix: String = "",
+            parent: ConfigureAble = this.parent.parent
+        ) = NumberRangeValue(name, default, range, step, suffix).apply {
+            parent.get().add(this)
+            visible { selected() }
+        }
+
+        fun number(
+            name: String,
+            default: Double,
+            range: ClosedFloatingPointRange<Double>,
+            step: Double,
+            suffix: String = "",
+            parent: ConfigureAble = this.parent.parent
+        ) = NumberValue(name, default, range, step, suffix).apply {
+            parent.get().add(this)
+            visible { selected() }
+        }
+
+        fun string(
+            name: String,
+            default: String,
+            parent: ConfigureAble = this.parent.parent
+        ) = StringValue(name, default).apply {
+            parent.get().add(this)
+            visible { selected() }
+        }
+
+        fun group(
+            name: String,
+            parent: ConfigureAble = this.parent.parent
+        ) = ConfigureAble(name, mutableListOf()).apply {
+            parent.get().add(this)
+            visible { selected() }
+        }
+
+        fun toggleAbleGroup(
+            name: String,
+            state: Boolean,
+            parent: ConfigureAble = this.parent.parent
+        ) = ToggleAbleConfigureAble(name, state).apply {
+            parent.get().add(this)
+            visible { selected() }
+        }
     }
 }
