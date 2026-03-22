@@ -96,6 +96,9 @@ open class ConfigureAble(
         value.forEach { it.reset() }
     }
 
+    fun isEmpty() = value.isEmpty()
+    fun isNotEmpty() = value.isNotEmpty()
+
     fun <T : ConfigureAble> tree(configureAble: T): T {
         value.add(configureAble)
         configureAble.owner = this
@@ -104,17 +107,15 @@ open class ConfigureAble(
 
     fun boolean(
         name: String,
-        default: Boolean,
-        parent: ConfigureAble = this
+        default: Boolean
     ) = BooleanValue(name, default).apply {
-        parent.value.add(this)
+        this@ConfigureAble.value += this
     }
 
     fun list(
-        name: String,
-        parent: ConfigureAble = this
-    )  = ChoiceValue(name, parent).apply {
-        parent.value.add(this)
+        name: String
+    ) = ChoiceValue(name).apply {
+        this@ConfigureAble.value += this
     }
 
     fun numberRange(
@@ -122,10 +123,9 @@ open class ConfigureAble(
         default: ClosedFloatingPointRange<Double>,
         range: ClosedFloatingPointRange<Double>,
         step: Double,
-        suffix: String = "",
-        parent: ConfigureAble = this
+        suffix: String = ""
     ) = NumberRangeValue(name, default, range, step, suffix).apply {
-        parent.value.add(this)
+        this@ConfigureAble.value += this
     }
 
     fun number(
@@ -133,32 +133,28 @@ open class ConfigureAble(
         default: Double,
         range: ClosedFloatingPointRange<Double>,
         step: Double,
-        suffix: String = "",
-        parent: ConfigureAble = this
+        suffix: String = ""
     ) = NumberValue(name, default, range, step, suffix).apply {
-        parent.value.add(this)
+        this@ConfigureAble.value += this
     }
 
     fun string(
         name: String,
-        default: String,
-        parent: ConfigureAble = this
+        default: String
     ) = StringValue(name, default).apply {
-        parent.value.add(this)
+        this@ConfigureAble.value += this
     }
 
     fun group(
-        name: String,
-        parent: ConfigureAble = this
+        name: String
     ) = ConfigureAble(name, mutableListOf()).apply {
-        parent.value.add(this)
+        this@ConfigureAble.value += this
     }
 
     fun toggleAbleGroup(
         name: String,
-        state: Boolean,
-        parent: ConfigureAble = this
+        state: Boolean
     ) = ToggleAbleConfigureAble(name, state).apply {
-        parent.value.add(this)
+        this@ConfigureAble.value += this
     }
 }

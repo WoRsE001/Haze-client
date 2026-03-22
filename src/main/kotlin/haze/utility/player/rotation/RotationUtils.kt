@@ -8,9 +8,11 @@ import net.minecraft.util.Mth
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.phys.AABB
 import kotlin.math.atan2
-import kotlin.math.pow
 
-fun gcd() = (mc.options.sensitivity().get() * 0.6f + 0.2f).pow(3).toFloat() * 1.2f
+fun gcd(): Float {
+    val f = mc.options.sensitivity().get().toFloat() * 0.6f + 0.2f
+    return f * f * f * 8.0f * 0.15f
+}
 
 fun pitchFromDiff(diff: Vec3f) = atan2(diff.y, diff.horizontalLength()).toDegrees().coerceIn(-90f, 90f)
 fun pitchTo(point: Vec3f) = pitchFromDiff(Vec3f(player.eyePosition) - point)

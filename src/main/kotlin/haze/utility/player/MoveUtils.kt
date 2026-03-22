@@ -12,6 +12,24 @@ import kotlin.math.hypot
 import kotlin.math.round
 import kotlin.math.sin
 
+var LocalPlayer.velocityX: Double
+    get() = deltaMovement.x
+    set(value) {
+        deltaMovement = Vec3(value, deltaMovement.y, deltaMovement.z)
+    }
+
+var LocalPlayer.velocityY: Double
+    get() = deltaMovement.y
+    set(value) {
+        deltaMovement = Vec3(deltaMovement.x, value, deltaMovement.z)
+    }
+
+var LocalPlayer.velocityZ: Double
+    get() = deltaMovement.z
+    set(value) {
+        deltaMovement = Vec3(deltaMovement.x, deltaMovement.y, value)
+    }
+
 fun LocalPlayer.isMoving() = input.moveVector.x != 0f || input.moveVector.y != 0f
 
 fun LocalPlayer.hasXZMotion() = deltaMovement.x != 0.0 && deltaMovement.z != 0.0

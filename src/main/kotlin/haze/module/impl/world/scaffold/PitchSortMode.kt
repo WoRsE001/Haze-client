@@ -4,7 +4,7 @@ import haze.setting.value.ChoiceValue
 import haze.utility.player
 
 // created by dicves_recode on 28.12.2025
-abstract class PitchSortMode(name: String, parent: ChoiceValue) : ChoiceValue.SubMode(name, parent) {
+abstract class PitchSortMode(name: String, parent: ChoiceValue) : ChoiceValue.Choice(name, parent) {
     fun getPitch(pitches: MutableList<Float>): Float {
         if (pitches.isEmpty())
             return player.xRot
