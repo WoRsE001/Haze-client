@@ -16,13 +16,13 @@ import net.minecraft.world.entity.LivingEntity
 // Blood! It's everywhere. SCWxD killed you on 22.03.2026 at 6:35.
 class Clicker : ConfigureAble("Clicker") {
     private val clickType = list("Attack type")
-    private val clickTypeLegacy by clickType.subMode("Legacy").select()
-    private val clickTypeModern by clickType.subMode("Modern")
+    private val clickTypeLegacy = clickType.choice("Legacy").select()
+    private val clickTypeModern = clickType.choice("Modern")
     private val critType = list("Crit type")
-    private val critTypeNone by critType.subMode("None").select()
-    private val critTypeSmart by critType.subMode("Smart")
-    private val critTypeAlways by critType.subMode("Always")
-    private val CPS by numberRange("CPS", 20.0..20.0, 0.0..40.0, 0.1).visible { clickTypeLegacy }
+    private val critTypeNone = critType.choice("None").select()
+    private val critTypeSmart = critType.choice("Smart")
+    private val critTypeAlways by critType.choice("Always")
+    private val CPS by numberRange("CPS", 20.0..20.0, 0.0..40.0, 0.1).visible { clickTypeLegacy.selected() }
     private val attackRange by number("Attack range", 3.0, 0.0..6.0, 0.1)
     private val clickRange by number("Click range", 8.0, 0.0..20.0, 0.1)
 
@@ -32,7 +32,7 @@ class Clicker : ConfigureAble("Clicker") {
 
     fun calculateClicks() {
         if (timer.reached >= delay && shouldAttack()) {
-            delay = 1000f / if (clickTypeModern) 5f else CPS.random().toFloat()
+            delay = 1000f / if (clickTypeModern.selected()) 5f else CPS.random().toFloat()
             clicks++
             timer.reset()
         }
@@ -60,8 +60,8 @@ class Clicker : ConfigureAble("Clicker") {
     }
 
     fun shouldAttack(): Boolean {
-        if (player.getAttackStrengthScale(0.5f) > 0.9 || clickTypeLegacy) {
-            if (player.onGround() && critTypeSmart || player.canCrit() || critTypeNone)
+        if (player.getAttackStrengthScale(0.5f) > 0.9 || clickTypeLegacy.selected()) {
+            if (player.onGround() && critTypeSmart.selected() || player.canCrit() || critTypeNone.selected())
                 return true
         }
 

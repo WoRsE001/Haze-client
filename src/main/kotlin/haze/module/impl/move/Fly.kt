@@ -18,12 +18,12 @@ object Fly : Module(
 ) {
     private val mode = list("Mode")
 
-    private val modeMotion by mode.subMode("Motion").select()
-    private val speedXZ by number("Speed XZ", 1.0, 0.0..10.0, 0.01).visible { modeMotion }
-    private val speedY by number("Speed Y", 1.0, 0.0..10.0, 0.01).visible { modeMotion }
+    private val modeMotion = mode.choice("Motion").select()
+    private val speedXZ by number("Speed XZ", 1.0, 0.0..10.0, 0.01).visible { modeMotion.selected() }
+    private val speedY by number("Speed Y", 1.0, 0.0..10.0, 0.01).visible { modeMotion.selected() }
 
-    private val modeAirWalk by mode.subMode("AirWalk")
-    private val sameY by boolean("Same Y", false).visible { modeAirWalk }
+    private val modeAirWalk = mode.choice("AirWalk")
+    private val sameY by boolean("Same Y", false).visible { modeAirWalk.selected() }
 
     private var savedY = 0
 
@@ -33,7 +33,7 @@ object Fly : Module(
 
     override fun onEvent(event: Event) {
         if (event is BlockShapeEvent) {
-            if (modeAirWalk) {
+            if (modeAirWalk.selected()) {
                 if (!sameY)
                     savedY = player.blockPosition().y
 
@@ -43,7 +43,7 @@ object Fly : Module(
         }
 
         if (event is PlayerStateUpdateEvent.Pre) {
-            if (modeMotion) {
+            if (modeMotion.selected()) {
                 player.deltaMovement = player.deltaMovement.multiply(Vec3(0.0, 0.0, 0.0))
 
                 player.deltaMovement = player.deltaMovement.withStrafe(speedXZ)

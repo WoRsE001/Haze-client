@@ -29,7 +29,7 @@ object AimAssist : Module(
 
     override fun onEvent(event: Event) {
         if (event is TickEvent.Pre) {
-            AttackAura.target = targetFinder.findTarget(AttackAura.target)
+            target = targetFinder.findTarget(target)
         }
 
         if (event is CursorDeltaEvent && target != null) {

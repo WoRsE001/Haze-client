@@ -12,11 +12,12 @@ object SprintReset : Module(
     "SprintReset",
     Category.COMBAT
 ) {
-    private val mode = list("Mode")
-    private val sprintTap = SprintTap(mode)
-    private val wTap = WTap(mode).select()
-    private val packet = Packet(mode)
-    private val onePacket = OnePacket(mode)
+    private val mode = list("Mode").apply {
+        choice(SprintTap)
+        choice(WTap).select()
+        choice(Packet)
+        choice(OnePacket)
+    }
     private val delay by number("Delay", 3.0, 0.0..10.0, 1.0, "ticks")
     private val reset by number("Reset", 2.0, 1.0..10.0, 1.0, "ticks")
 

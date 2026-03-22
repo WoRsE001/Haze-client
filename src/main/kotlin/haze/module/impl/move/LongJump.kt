@@ -12,7 +12,7 @@ object LongJump : Module(
     Category.MOVE
 ) {
     private val modes = list("Modes")
-    private val modeMotion by LongJumpMotion(modes)
+    private val modeMotion by modes.choice(LongJumpMotion)
 
     override fun onEvent(event: Event) {
         val mode = modes.get()

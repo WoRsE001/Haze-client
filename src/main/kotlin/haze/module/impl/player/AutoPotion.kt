@@ -26,10 +26,10 @@ object AutoPotion : Module(
 
     private val potions = group("Potions")
 
-    private val healthPotion by boolean("Health", true, potions)
-    private val fireResistantPotion by boolean("Fire resistant", true, potions)
-    private val speedPotion by boolean("Speed", true, potions)
-    private val strengthPotion by boolean("Strength", true, potions)
+    private val healthPotion by potions.boolean("Health", true)
+    private val fireResistantPotion by potions.boolean("Fire resistant", true)
+    private val speedPotion by potions.boolean("Speed", true)
+    private val strengthPotion by potions.boolean("Strength", true)
 
     private val thresholdHealth by number("thresholdHealth", 8.0, 1.0..19.0, 0.1).visible { healthPotion }
 

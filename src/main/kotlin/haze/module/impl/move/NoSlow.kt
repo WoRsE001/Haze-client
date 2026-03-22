@@ -22,19 +22,19 @@ object NoSlow : Module(
 ) {
     private val consume = toggleAbleGroup("Consume", true)
     private val consumeMode = consume.list("Mode")
-    private val consumeModeNone by consumeMode.subMode("None").select()
-    private val consumeModeIntave by consumeMode.subMode("Intave")
-    private val consumeModeGrim by consumeMode.subMode("Grim")
-    private val consumeModeGrimTicks by consume.number("Ticks", 2.0, 1.0..5.0, 1.0).visible { consumeModeGrim }
+    private val consumeModeNone by consumeMode.choice("None").select()
+    private val consumeModeIntave = consumeMode.choice("Intave")
+    private val consumeModeGrim = consumeMode.choice("Grim")
+    private val consumeModeGrimTicks by consume.number("Ticks", 2.0, 1.0..5.0, 1.0).visible { consumeModeGrim.selected() }
     private val consumeSlowFactor by consume.number("Slow factor", 1.0, 0.0..1.0, 0.1)
     private val consumeSprint by consume.boolean("Sprint", true)
 
     private val sword = toggleAbleGroup("Sword", true)
     private val swordMode = consume.list("Mode")
-    private val swordModeNone by swordMode.subMode("None").select()
-    private val swordModeIntave by swordMode.subMode("Intave")
-    private val swordModeGrim by swordMode.subMode("Grim")
-    private val swordModeGrimTicks by consume.number("Ticks", 2.0, 1.0..5.0, 1.0).visible { swordModeGrim }
+    private val swordModeNone by swordMode.choice("None").select()
+    private val swordModeIntave = swordMode.choice("Intave")
+    private val swordModeGrim = swordMode.choice("Grim")
+    private val swordModeGrimTicks by consume.number("Ticks", 2.0, 1.0..5.0, 1.0).visible { swordModeGrim.selected() }
     private val swordSlowFactor by consume.number("Slow factor", 1.0, 0.0..1.0, 0.1)
     private val swordSprint by consume.boolean("Sprint", true)
 
@@ -44,7 +44,7 @@ object NoSlow : Module(
                 event.slowDown = consumeSlowFactor
                 event.sprint = consumeSprint
 
-                if (consumeModeGrim && player.tickCount % consumeModeGrimTicks.toInt() != 0) {
+                if (consumeModeGrim.selected() && player.tickCount % consumeModeGrimTicks.toInt() != 0) {
                     event.slowDown = 0.2
                     event.sprint = false
                 }
@@ -54,7 +54,7 @@ object NoSlow : Module(
                 event.slowDown = swordSlowFactor
                 event.sprint = swordSprint
 
-                if (swordModeGrim && player.tickCount % swordModeGrimTicks.toInt() != 0) {
+                if (swordModeGrim.selected() && player.tickCount % swordModeGrimTicks.toInt() != 0) {
                     event.slowDown = 0.2
                     event.sprint = false
                 }
@@ -62,7 +62,7 @@ object NoSlow : Module(
         }
 
         if (event is PlayerStateUpdateEvent.Pre) {
-            if (consume.toggled && player.useItem.isFood && consumeModeIntave) {
+            if (consume.toggled && player.useItem.isFood && consumeModeIntave.selected()) {
                 connection.send(
                     ServerboundPlayerActionPacket(
                         ServerboundPlayerActionPacket.Action.RELEASE_USE_ITEM,
@@ -77,7 +77,7 @@ object NoSlow : Module(
             val packet = event.packet
 
             if (packet is ServerboundUseItemOnPacket) {
-                if (sword.toggled && player.useItem.useAnimation == ItemUseAnimation.BLOCK && swordModeIntave) {
+                if (sword.toggled && player.useItem.useAnimation == ItemUseAnimation.BLOCK && swordModeIntave.selected()) {
                     connection.send(
                         ServerboundUseItemOnPacket(
                             packet.hand, BlockHitResult(

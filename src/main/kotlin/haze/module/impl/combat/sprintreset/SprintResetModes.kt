@@ -11,7 +11,7 @@ import haze.utility.player
 import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket
 
 // created by dicves_recode on 29.12.2025
-class SprintTap(parent: ChoiceValue) : SprintResetMode("Sprint tap", parent) {
+object SprintTap : SprintResetMode("Sprint tap") {
     override fun reset(event: Event): Boolean {
         if (event is PlayerStateUpdateEvent.Post) {
             player.isSprinting = false
@@ -22,7 +22,7 @@ class SprintTap(parent: ChoiceValue) : SprintResetMode("Sprint tap", parent) {
     }
 }
 
-class WTap(parent: ChoiceValue) : SprintResetMode("W tap", parent) {
+object WTap : SprintResetMode("W tap") {
     override fun reset(event: Event): Boolean {
         if (event is MovementInputEvent) {
             event.forward = false
@@ -33,7 +33,7 @@ class WTap(parent: ChoiceValue) : SprintResetMode("W tap", parent) {
     }
 }
 
-class Packet(parent: ChoiceValue) : SprintResetMode("Packet", parent) {
+object Packet : SprintResetMode("Packet") {
     override fun startReset(event: Event): Boolean {
         if (event is SendPosEvent.Pre) {
             connection.send(ServerboundPlayerCommandPacket(player, ServerboundPlayerCommandPacket.Action.STOP_SPRINTING))
@@ -68,7 +68,7 @@ class Packet(parent: ChoiceValue) : SprintResetMode("Packet", parent) {
     }
 }
 
-class OnePacket(parent: ChoiceValue) : SprintResetMode("One packet", parent) {
+object OnePacket : SprintResetMode("One packet") {
     override fun stopReset(event: Event): Boolean {
         if (event is SendPosEvent.Pre) {
             connection.send(ServerboundPlayerCommandPacket(player, ServerboundPlayerCommandPacket.Action.START_SPRINTING))

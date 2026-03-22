@@ -10,12 +10,12 @@ import haze.utility.player
 object NoFall : Module("NoFall", Category.PLAYER) {
     private val mode = list("Mode")
 
-    private val modeSpoofGround by mode.subMode("Spoof ground")
-    private val onGround by boolean("On ground", true).visible { modeSpoofGround }
+    private val modeSpoofGround = mode.choice("Spoof ground")
+    private val onGround by boolean("On ground", true).visible { modeSpoofGround.selected() }
 
     override fun onEvent(event: Event) {
         if (event is SendPosEvent.Pre) {
-            if (modeSpoofGround) {
+            if (modeSpoofGround.selected()) {
                 player.setOnGround(onGround)
             }
         }

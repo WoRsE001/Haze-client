@@ -16,13 +16,13 @@ object Velocity : Module(
 ) {
 
     private val modeJump = toggleAbleGroup("Jump", true)
-    private val chance by number("Chance", 1.0, 0.0..1.0, 0.01, parent = modeJump)
+    private val chance by modeJump.number("Chance", 1.0, 0.0..1.0, 0.01)
     private val modeMotion = toggleAbleGroup("Motion", false)
-    private val motionXZ by number("MotionXZ", 1.0, -1.0..1.0, 0.1, parent = modeMotion)
-    private val motionY by number("MotionY", 1.0, -1.0..1.0, 0.1, parent = modeMotion)
+    private val motionXZ by modeMotion.number("MotionXZ", 1.0, -1.0..1.0, 0.1)
+    private val motionY by modeMotion.number("MotionY", 1.0, -1.0..1.0, 0.1)
     private val modeReduce = toggleAbleGroup("Reduce", false)
-    private val reduceFactor by number("Reduce factor", 1.0, -1.0..1.0, 0.1, parent = modeReduce)
-    private val reduceFactorWithSprint by number("Reduce factor with sprint", 1.0, -1.0..1.0, 0.1, parent = modeReduce)
+    private val reduceFactor by modeReduce.number("Reduce factor", 1.0, -1.0..1.0, 0.1)
+    private val reduceFactorWithSprint by modeReduce.number("Reduce factor with sprint", 1.0, -1.0..1.0, 0.1)
 
     override fun onEvent(event: Event) {
         when (event) {

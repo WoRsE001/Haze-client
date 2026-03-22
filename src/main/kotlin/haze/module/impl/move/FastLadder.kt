@@ -13,7 +13,7 @@ object FastLadder : Module(
     Category.MOVE
 ) {
     private val mode = list("Mode")
-    private val modeMotion = mode.subMode("Motion").select()
+    private val modeMotion = mode.choice("Motion").select()
 
     private val motion by number("Motion", 1.0, 0.0..2.0, 0.1).visible { modeMotion.selected() }
 

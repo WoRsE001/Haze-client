@@ -49,11 +49,12 @@ object Scaffold : Module(
 
             private val pitchSpeed by pitch.number("Speed", 180.0, 0.0..180.0, 1.0)
             private val staticPitchOnMove by pitch.boolean("Static on move", false)
-            private val pitchSortMode = pitch.list("Sort mode")
-            private val lowest = Lowest(pitchSortMode)
-            private val highest = Highest(pitchSortMode)
-            private val mid = Mid(pitchSortMode)
-            private val nearest = Nearest(pitchSortMode).select()
+            private val pitchSortMode = pitch.list("Sort mode").apply {
+                choice(Lowest)
+                choice(Highest)
+                choice(Mid)
+                choice(Nearest).select()
+            }
             private val sameY by pitch.boolean("Same Y", false)
 
         // yaw
@@ -83,9 +84,9 @@ object Scaffold : Module(
 
         private val autoJump by movement.boolean("Auto jump", false)
         private val towerMode = movement.list("Tower mode")
-        private val towerModeNone by towerMode.subMode("None").select()
-        private val towerModeJump by towerMode.subMode("Jump")
-        private val jumpHeight by number("Jump height", 0.42, 0.0..2.0, 0.01).visible { towerModeJump }
+        private val towerModeNone by towerMode.choice("None").select()
+        private val towerModeJump = towerMode.choice("Jump")
+        private val jumpHeight by number("Jump height", 0.42, 0.0..2.0, 0.01).visible { towerModeJump.selected() }
         private val moveCorrect = movement.tree(MoveCorrector())
 
 
@@ -104,7 +105,7 @@ object Scaffold : Module(
     override fun onEvent(event: Event) {
         when (event) {
             JumpEvent.Pre -> {
-                if (willTower() && towerModeJump)
+                if (willTower() && towerModeJump.selected())
                     JumpEvent.Pre.height = jumpHeight.toFloat()
             }
 

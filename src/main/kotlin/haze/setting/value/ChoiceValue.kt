@@ -3,20 +3,21 @@ package haze.setting.value
 import haze.setting.ConfigureAble
 import haze.setting.value.ChoiceValue.Choice
 import haze.utility.math.Rect
+import haze.utility.mc
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import net.minecraft.client.gui.GuiGraphics
-import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.KProperty
+import net.minecraft.client.input.MouseButtonEvent
 
 // испорченно SCWGxD в 31.01.2026:9:45
 class ChoiceValue(
     name: String
 ) : Value<Choice?>(name, null) {
     private val _choices = mutableListOf<Choice>()
+    private var isShowChoices = false
 
     val choices: List<Choice>
         get() = _choices
@@ -34,7 +35,44 @@ class ChoiceValue(
     override var rect = Rect(0f, 0f, 0f, 0f)
 
     override fun render(guiGraphics: GuiGraphics, mouseX: Float, mouseY: Float) {
+        val nameModificator = if (isShowChoices) "-" else "+"
+        val sizeX = choices.maxOfOrNull { mc.font.width(it.name) }?.plus(mc.font.width("$name:  $nameModificator"))
+        rect.size.x = sizeX?.toFloat()!!
+        rect.size.y = 10f * if (isShowChoices) choices.size + 1 else 1
 
+        guiGraphics.fill(rect.lt.x.toInt(), rect.lt.y.toInt(), rect.rb.x.toInt(), rect.rb.y.toInt(), 0xff2d2d2d.toInt())
+        guiGraphics.drawString(mc.font, "$name: ${value?.name}", rect.lt.x.toInt(), (rect.lt.y + 5 - mc.font.lineHeight / 2).toInt(), -1, false)
+        guiGraphics.drawString(mc.font, nameModificator, (rect.rt.x - mc.font.width(nameModificator)).toInt(), (rect.rt.y + 5 - mc.font.lineHeight / 2).toInt(), -1, false)
+
+        if (isShowChoices) {
+            var offsetY = 10f
+            for (mode in choices) {
+                guiGraphics.drawString(mc.font, mode.name, rect.lt.x.toInt(), (rect.lt.y + 5 - mc.font.lineHeight / 2 + offsetY).toInt(), -1, false)
+                offsetY += 10f
+            }
+        }
+    }
+
+    override fun mouseClicked(mouseButtonEvent: MouseButtonEvent, bl: Boolean): Boolean {
+        val mouseX = mouseButtonEvent.x.toFloat()
+        val mouseY = mouseButtonEvent.y.toFloat()
+        val button = mouseButtonEvent.button()
+
+        if (button == 0 && rect.isCollided(mouseX, mouseY)) {
+            if (isShowChoices) {
+                var offsetY = 10f
+                for (mode in choices) {
+                    if (rect.isCollided(mouseX, mouseY, rect.lt.x, rect.lt.y + 5 - mc.font.lineHeight / 2 + offsetY, rect.size.x, 10f)) {
+                        value = mode
+                    }
+                    offsetY += 10f
+                }
+            }
+            isShowChoices = !isShowChoices
+            return true
+        }
+
+        return false
     }
 
     override var json: JsonObject
@@ -48,15 +86,14 @@ class ChoiceValue(
 
     open class Choice internal constructor(
         name: String
-    ) : ConfigureAble(name), ReadOnlyProperty<Any, Boolean> {
+    ) : ConfigureAble(name) {
         lateinit var parent: ChoiceValue
-
-        override fun getValue(thisRef: Any, property: KProperty<*>) =
-            this == parent.get()
 
         fun select() = apply {
             parent.set(this)
         }
+
+        fun selected() = parent.get() == this
     }
 }
 //class ChoiceValue(name: String, val parent: ConfigureAble) : Value<SubMode?>(name, null) {

@@ -23,7 +23,7 @@ object AttackAura : Module(
     private val clicker = tree(Clicker())
     private val moveCorrect = tree(MoveCorrector())
 
-    private var target: LivingEntity? = null
+    var target: LivingEntity? = null
 
     init {
         registerToRotationHandler()
