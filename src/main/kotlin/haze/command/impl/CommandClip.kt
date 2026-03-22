@@ -4,7 +4,7 @@ import haze.command.Command
 import haze.utility.connection
 import haze.utility.mc
 import haze.utility.player
-import haze.utility.rotation.CameraRotation
+import haze.utility.player.rotation.CameraRotation
 import haze.utility.sendMessage
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket
 import net.minecraft.world.phys.Vec3

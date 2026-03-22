@@ -3,8 +3,8 @@ package haze.module.impl.world.scaffold
 import haze.utility.player
 import haze.utility.player.getYawWithMovement
 import haze.utility.player.pick
-import haze.utility.rotation.Rotation
-import haze.utility.rotation.rotation
+import haze.utility.player.rotation.Rotation
+import haze.utility.player.rotation.rotation
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.Mth

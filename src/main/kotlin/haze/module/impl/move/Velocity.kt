@@ -50,7 +50,7 @@ object Velocity : Module(
                 }
             }
 
-            is PacketEvent.RECEIVE -> {
+            is PacketEvent.Receive -> {
                 if (modeMotion.toggled) {
                     if (event.packet is ClientboundSetEntityMotionPacket && event.packet.id == player.id) {
                         event.cancel()

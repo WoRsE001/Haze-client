@@ -18,14 +18,14 @@ object Debug : Module("Debug", Category.MISC) {
     val CPSArray = Array(10) { 0 }
 
     override fun onEvent(event: Event) {
-        if (event is TickEvent.PRE) {
+        if (event is TickEvent.Pre) {
             CPSArray[player.tickCount % 10] = 0
         }
-        if (event is TickEvent.POST) {
+        if (event is TickEvent.Post) {
             mc.sendMessage((CPSArray.sum()).toString())
         }
 
-        if (event is PacketEvent.RECEIVE) {
+        if (event is PacketEvent.Receive) {
             val packet = event.packet
             if (flagDetector && packet is ClientboundPlayerPositionPacket) {
                 mc.sendMessage("Flag detect")

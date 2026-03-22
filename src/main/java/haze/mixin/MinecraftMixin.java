@@ -8,8 +8,9 @@ import haze.event.impl.TickEvent;
 import haze.module.impl.misc.Debug;
 import haze.module.impl.visual.HitAccuracy;
 import haze.utility.MinecraftExtensionsKt;
-import haze.utility.rotation.RotationHandler;
-import haze.utility.slot.FakeSlotStorageKt;
+import haze.utility.connection.PacketHandler;
+import haze.utility.player.inventory.slot.FakeSlotStorageKt;
+import haze.utility.player.rotation.RotationHandler;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.platform.Window;
 import net.minecraft.client.Minecraft;
@@ -49,7 +50,7 @@ public class MinecraftMixin {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void callPreTickEvent(CallbackInfo ci) {
-        TickEvent.PRE event = TickEvent.PRE.INSTANCE;
+        TickEvent.Pre event = TickEvent.Pre.INSTANCE;
         event.call();
 
         if (MinecraftExtensionsKt.nullCheck())
@@ -61,13 +62,15 @@ public class MinecraftMixin {
 
     @Inject(method = "tick", at = @At("RETURN"))
     private void callPostTickEvent(CallbackInfo ci) {
-        TickEvent.POST event = TickEvent.POST.INSTANCE;
+        TickEvent.Post event = TickEvent.Post.INSTANCE;
         event.call();
     }
 
     @Inject(method = "runTick", at = @At("HEAD"))
     private void callRunGameLoopEvent(boolean tick, CallbackInfo ci) {
         GameLoopEvent.INSTANCE.call();
+        if (true) return;
+        PacketHandler.INSTANCE.handleSentQueue();
     }
 
     @Inject(method = "handleKeybinds", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/KeyMapping;consumeClick()Z", ordinal = 14, shift = At.Shift.BEFORE))

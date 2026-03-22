@@ -1,6 +1,6 @@
 package haze.mixin;
 
-import haze.utility.rotation.CameraRotation;
+import haze.utility.player.rotation.CameraRotation;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Camera;
 import org.spongepowered.asm.mixin.Mixin;

@@ -4,25 +4,25 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BlockCollisionsMixin",
-    "ConnectionMixin",
-    "EntityMixin",
-    "LivinEntityMixin",
-    "PlayerMixin",
-    "accessor.LivingEntityAccessor",
     "CameraMixin",
     "ClientPacketListenerMixin",
+    "ConnectionMixin",
     "DeltaTrackerTimerMixin",
+    "EntityMixin",
     "GameRendererMixin",
     "GuiMixin",
     "ItemInHandRendererMixin",
     "KeyboardHandlerMixin",
     "KeyboardInputMixin",
     "LevelRendererMixin",
+    "LivinEntityMixin",
     "LocalPlayerMixin",
     "MinecraftMixin",
     "MouseHandlerMixin",
     "MultiPlayerGameModeMixin",
+    "PlayerMixin",
     "accessor.BufferBuilderAccessor",
+    "accessor.LivingEntityAccessor",
     "accessor.MinecraftAccessor",
     "accessor.MultiPlayerGameModeAccessor"
   ],
@@ -31,5 +31,8 @@
   },
   "overwrites": {
     "requireAnnotations": true
-  }
+  },
+  "client": [
+    "GuiRendererMixin"
+  ]
 }

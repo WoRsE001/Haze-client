@@ -8,19 +8,19 @@ import haze.utility.gameMode
 import haze.utility.math.random
 import haze.utility.mc
 import haze.utility.player
-import haze.utility.player.armorValue
-import haze.utility.player.attackDamage
-import haze.utility.player.foodComponent
-import haze.utility.player.getEnchantment
-import haze.utility.player.isChestArmor
-import haze.utility.player.isFood
-import haze.utility.player.isFootArmor
-import haze.utility.player.isFull
-import haze.utility.player.isFullBlock
-import haze.utility.player.isHeadArmor
-import haze.utility.player.isLegArmor
-import haze.utility.player.isPlayerArmor
-import haze.utility.player.isSword
+import haze.utility.player.inventory.armorValue
+import haze.utility.player.inventory.attackDamage
+import haze.utility.player.inventory.foodComponent
+import haze.utility.player.inventory.getEnchantment
+import haze.utility.player.inventory.isChestArmor
+import haze.utility.player.inventory.isFood
+import haze.utility.player.inventory.isFootArmor
+import haze.utility.player.inventory.isFull
+import haze.utility.player.inventory.isFullBlock
+import haze.utility.player.inventory.isHeadArmor
+import haze.utility.player.inventory.isLegArmor
+import haze.utility.player.inventory.isPlayerArmor
+import haze.utility.player.inventory.isSword
 import net.minecraft.client.gui.screens.inventory.InventoryScreen
 import net.minecraft.world.inventory.ClickType
 import net.minecraft.world.inventory.InventoryMenu
@@ -50,7 +50,7 @@ object InventoryCleaner : Module("InventoryCleaner", Category.PLAYER) {
     private var delay = 0
 
     override fun onEvent(event: Event) {
-        if (event !is TickEvent.PRE) return
+        if (event !is TickEvent.Pre) return
         if (mc.screen !is InventoryScreen) return
         if (sort.toggled) sort(player.inventoryMenu)
         if (equipArmor.toggled) equipArmor(player.inventoryMenu)

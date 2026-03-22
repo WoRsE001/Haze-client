@@ -5,14 +5,9 @@ import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.common.ServerboundPongPacket
 
 interface PacketEvent {
-    object SEND : CancelAbleEvent() {
+    object Send : CancelAbleEvent() {
         var packet: Packet<*> = ServerboundPongPacket(0) // заглушка
-        var totalDelay = 0
-
-        fun addDelay(delay: Int) {
-            totalDelay += delay
-        }
     }
 
-    data class RECEIVE(val packet: Packet<*>) : CancelAbleEvent()
+    data class Receive(val packet: Packet<*>) : CancelAbleEvent()
 }

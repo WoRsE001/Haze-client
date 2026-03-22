@@ -11,25 +11,25 @@ import haze.module.Module
 import haze.module.impl.world.scaffold.*
 import haze.utility.mc
 import haze.utility.player
-import haze.utility.entity.distanceTo
 import haze.utility.math.roundTo
 import haze.utility.nullCheck
 import haze.utility.player.airTicks
 import haze.utility.player.groundTicks
 import haze.utility.player.hasXZMotion
 import haze.utility.player.isMoving
-import haze.utility.rotation.CameraRotation
-import haze.utility.rotation.RotateAble
-import haze.utility.rotation.Rotation
-import haze.utility.rotation.rotate
-import haze.utility.rotation.rotation
-import haze.utility.slot.resetSlot
+import haze.utility.player.rotation.CameraRotation
+import haze.utility.player.rotation.RotateAble
+import haze.utility.player.rotation.Rotation
+import haze.utility.player.rotation.rotate
+import haze.utility.player.rotation.rotation
+import haze.utility.player.inventory.slot.resetSlot
 import haze.utility.level
-import haze.utility.player.MoveCorrectSetting
+import haze.setting.preset.MoveCorrector
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.Vec3
 import kotlin.math.cos
 import kotlin.math.floor
 import kotlin.math.sin
@@ -86,7 +86,7 @@ object Scaffold : Module(
         private val towerModeNone by towerMode.subMode("None").select()
         private val towerModeJump by towerMode.subMode("Jump")
         private val jumpHeight by number("Jump height", 0.42, 0.0..2.0, 0.01).visible { towerModeJump }
-        private val moveCorrect = movement.tree(MoveCorrectSetting())
+        private val moveCorrect = movement.tree(MoveCorrector())
 
 
     private var targetBlock: BlockPos? = null
@@ -103,9 +103,9 @@ object Scaffold : Module(
 
     override fun onEvent(event: Event) {
         when (event) {
-            JumpEvent -> {
+            JumpEvent.Pre -> {
                 if (willTower() && towerModeJump)
-                    JumpEvent.height = jumpHeight.toFloat()
+                    JumpEvent.Pre.height = jumpHeight.toFloat()
             }
 
             LegitClickTimingEvent -> {
@@ -124,7 +124,7 @@ object Scaffold : Module(
                 event.jump = (autoJump || mc.options.keyJump.isDown) && (!telly.toggled || player.groundTicks > tellyGroundTicks)
             }
 
-            TickEvent.PRE -> {
+            TickEvent.Pre -> {
                 targetBlock = getBestBlock()
             }
         }
@@ -167,8 +167,8 @@ object Scaffold : Module(
                         continue
 
                     if (bestBlock == null ||
-                        player.distanceTo(x + 0.5, y + 0.5, z + 0.5) <
-                        player.distanceTo(bestBlock.x + 0.5, bestBlock.y + 0.5, bestBlock.z + 0.5)
+                        player.distanceToSqr(Vec3(x + 0.5, y + 0.5, z + 0.5)) <
+                        player.distanceToSqr(Vec3(bestBlock.x + 0.5, bestBlock.y + 0.5, bestBlock.z + 0.5))
                     ) bestBlock = blockPos
                 }
             }

@@ -2,7 +2,7 @@ package haze.module.impl.move
 
 import haze.event.Event
 import haze.event.impl.BlockShapeEvent
-import haze.event.impl.UpdateEvent
+import haze.event.impl.PlayerStateUpdateEvent
 import haze.module.Category
 import haze.module.Module
 import haze.utility.mc
@@ -42,7 +42,7 @@ object Fly : Module(
             }
         }
 
-        if (event is UpdateEvent.Pre) {
+        if (event is PlayerStateUpdateEvent.Pre) {
             if (modeMotion) {
                 player.deltaMovement = player.deltaMovement.multiply(Vec3(0.0, 0.0, 0.0))
 

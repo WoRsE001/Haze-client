@@ -19,7 +19,7 @@ object AutoRegister : Module(
     private val timer = Timer()
 
     override fun onEvent(event: Event) {
-        if (event is PacketEvent.RECEIVE && event.packet is ClientboundSystemChatPacket && timer.reached >= delay) {
+        if (event is PacketEvent.Receive && event.packet is ClientboundSystemChatPacket && timer.reached >= delay) {
             val content = event.packet.content.toString()
 
             if ("/reg" in content) {

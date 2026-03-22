@@ -1,8 +1,8 @@
 package haze.utility.target
 
 import haze.utility.player
-import haze.utility.rotation.CameraRotation
-import haze.utility.rotation.yawTo
+import haze.utility.player.rotation.CameraRotation
+import haze.utility.player.rotation.yawTo
 import haze.utility.level
 import haze.utility.math.Vec3f
 import net.minecraft.world.entity.LivingEntity

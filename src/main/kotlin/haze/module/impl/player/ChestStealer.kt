@@ -17,7 +17,7 @@ object ChestStealer : Module(
     private val fixSwap by boolean("Fix swap", true)
 
     override fun onEvent(event: Event) {
-        if (event is TickEvent.PRE) {
+        if (event is TickEvent.Pre) {
             if (player.containerMenu is ChestMenu) {
                 for (i in 0..<(player.containerMenu as ChestMenu).container.containerSize) {
                     if (!player.containerMenu.getSlot(i).item.isEmpty) {

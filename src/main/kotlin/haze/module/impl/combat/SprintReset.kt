@@ -36,7 +36,7 @@ object SprintReset : Module(
         if (currentSubMode !is SprintResetMode)
             return
 
-        if (event is TickEvent.PRE) {
+        if (event is TickEvent.Pre) {
             if (lastAttackedTarget != null && lastAttackedTarget?.hurtTime == 10) {
                 delayTimer = delay.toInt()
                 resetTimer = reset.toInt()

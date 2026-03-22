@@ -6,7 +6,7 @@ import haze.module.Category
 import haze.module.Module
 import haze.utility.mc
 import haze.utility.player
-import haze.utility.slot.resetSlot
+import haze.utility.player.inventory.slot.resetSlot
 import haze.utility.level
 import net.minecraft.core.BlockPos
 import net.minecraft.world.phys.BlockHitResult

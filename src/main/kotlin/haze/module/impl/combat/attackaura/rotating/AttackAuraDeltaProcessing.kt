@@ -1,7 +1,7 @@
 package haze.module.impl.combat.attackaura.rotating
 
 import haze.setting.ConfigureAble
-import haze.utility.rotation.Rotation
+import haze.utility.player.rotation.Rotation
 
 // created by dicves_recode on 10.01.2026
 object AttackAuraDeltaProcessing : ConfigureAble("Delta processing") {

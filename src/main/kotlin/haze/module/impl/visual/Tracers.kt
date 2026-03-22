@@ -10,8 +10,7 @@ import haze.utility.render.Render2D
 object Tracers : Module("Tracers", Category.VISUAL) {
     override fun onEvent(event: Event) {
         if (event is RenderEvent.Gui) {
-            Render2D.guiGraphics = event.guiGraphics
-            Render2D.drawRect(Rect(0f, 0f, 100f, 100f), -1)
+            Render2D.drawGradientRect(event.guiGraphics, Rect(0f, 0f, 100f, 100f), intArrayOf(-1, -1, -1, -1))
         }
     }
 }

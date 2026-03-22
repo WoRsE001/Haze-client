@@ -2,7 +2,6 @@ package haze.event.impl
 
 import haze.event.CancelAbleEvent
 import haze.event.Event
-import haze.utility.rotation.Rotation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.phys.Vec3
 
@@ -14,7 +13,7 @@ interface AttackEvent {
 
 data class SlowDownEvent(var slowDown: Double, var sprint: Boolean) : Event
 
-interface UpdateEvent {
+interface PlayerStateUpdateEvent {
     object Pre: Event
     object Post: Event
 }
@@ -24,16 +23,17 @@ object MoveRelativeEvent : Event {
     lateinit var input: Vec3
 }
 
-object JumpEvent : CancelAbleEvent() {
-    var yaw = 0f
-    var height = 0f
+interface JumpEvent {
+    object Pre : CancelAbleEvent() {
+        var yaw = 0f
+        var height = 0f
+    }
+
+    object Post : Event
 }
 
 interface SendPosEvent {
-    object Pre: Event {
-        var position = Vec3(0.0, 0.0, 0.0)
-        var rotation = Rotation(0f, 0f)
-        var onGround = true
-    }
+    object Pre: Event
+
     object Post: Event
 }

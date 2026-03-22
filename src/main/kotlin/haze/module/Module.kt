@@ -9,6 +9,8 @@ import haze.utility.math.Rect
 import haze.utility.mc
 import haze.utility.nullCheck
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.input.MouseButtonEvent
 
@@ -29,7 +31,14 @@ abstract class Module(
     }
 
     override var json: JsonObject
-        get() = super.json
+        get() = buildJsonObject {
+            put("Info", buildJsonObject {
+                put("Keybind", keybind.key)
+                put("Hold", keybind.hold)
+            })
+
+            super.json
+        }
         set(value) {
             super.json = value
         }

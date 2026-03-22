@@ -1,9 +1,8 @@
 package haze.module.impl.combat.attackaura.hitvec
 
 import haze.utility.math.Vec3f
-import haze.utility.rotation.CameraRotation
-import haze.utility.rotation.rotation
-import haze.utility.rotation.expand
+import haze.utility.player.rotation.CameraRotation
+import haze.utility.player.rotation.expand
 import net.minecraft.world.entity.LivingEntity
 
 // i regret everything, i've done, SCWGxD (05.02.2026:16:25)

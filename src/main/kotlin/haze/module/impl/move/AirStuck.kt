@@ -3,7 +3,7 @@ package haze.module.impl.move
 import haze.event.Event
 import haze.event.impl.MovementEvent
 import haze.event.impl.PacketEvent
-import haze.event.impl.UpdateEvent
+import haze.event.impl.PlayerStateUpdateEvent
 import haze.module.Category
 import haze.module.Module
 import haze.utility.player
@@ -30,7 +30,7 @@ object AirStuck : Module(
     }
 
     override fun onEvent(event: Event) {
-        if (event is UpdateEvent.Pre) {
+        if (event is PlayerStateUpdateEvent.Pre) {
             player.deltaMovement = Vec3(0.0, 0.0, 0.0)
         }
 
@@ -38,7 +38,7 @@ object AirStuck : Module(
             event.moveVector = Vec2(0f, 0f)
         }
 
-        if (event is PacketEvent.SEND && event.packet is ServerboundMovePlayerPacket) {
+        if (event is PacketEvent.Send && event.packet is ServerboundMovePlayerPacket) {
             event.cancel()
         }
     }

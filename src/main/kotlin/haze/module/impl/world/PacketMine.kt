@@ -18,7 +18,7 @@ object PacketMine : Module(
     Category.WORLD
 ) {
     override fun onEvent(event: Event) {
-        if (event is TickEvent.PRE) {
+        if (event is TickEvent.Pre) {
             val crosshairTarget = mc.hitResult ?: return
 
             if (crosshairTarget !is BlockHitResult)

@@ -1,8 +1,8 @@
 package haze.mixin;
 
 import haze.event.impl.CursorDeltaEvent;
-import haze.utility.slot.FakeSlotStorageKt;
 import com.llamalad7.mixinextras.sugar.Local;
+import haze.utility.player.inventory.slot.FakeSlotStorageKt;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.client.ScrollWheelHandler;
 import net.minecraft.world.entity.player.Inventory;

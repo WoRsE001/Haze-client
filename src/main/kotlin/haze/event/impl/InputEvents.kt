@@ -4,6 +4,8 @@ import haze.event.Event
 import net.minecraft.world.phys.Vec2
 
 // created by dicves_recode on 30.11.2025
+object LegitClickTimingEvent : Event
+
 object CursorDeltaEvent : Event {
     var accumulatedDX = 0.0
     var accumulatedDY = 0.0

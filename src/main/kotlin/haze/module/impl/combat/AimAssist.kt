@@ -6,10 +6,10 @@ import haze.event.impl.TickEvent
 import haze.module.Category
 import haze.module.Module
 import haze.utility.player
-import haze.utility.rotation.rotation
-import haze.utility.rotation.rotationTo
-import haze.utility.rotation.expand
-import haze.utility.target.TargetFinder
+import haze.utility.player.rotation.rotation
+import haze.utility.player.rotation.rotationTo
+import haze.utility.player.rotation.expand
+import haze.setting.preset.TargetFinder
 import net.minecraft.world.entity.LivingEntity
 import kotlin.math.roundToLong
 import kotlin.math.sign
@@ -28,7 +28,7 @@ object AimAssist : Module(
     var target: LivingEntity? = null
 
     override fun onEvent(event: Event) {
-        if (event is TickEvent.PRE) {
+        if (event is TickEvent.Pre) {
             AttackAura.target = targetFinder.findTarget(AttackAura.target)
         }
 

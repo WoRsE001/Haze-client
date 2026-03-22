@@ -2,7 +2,7 @@ package haze.module.impl.visual
 
 import haze.module.Category
 import haze.module.Module
-import haze.utility.rotation.CameraRotation
+import haze.utility.player.rotation.CameraRotation
 
 // created by dicves_recode on 30.11.2025
 object FreeLook : Module(

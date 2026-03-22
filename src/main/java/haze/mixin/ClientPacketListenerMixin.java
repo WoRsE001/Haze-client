@@ -1,7 +1,7 @@
 package haze.mixin;
 
 import haze.event.impl.ChatMessageEvent;
-import haze.utility.slot.FakeSlotStorageKt;
+import haze.utility.player.inventory.slot.FakeSlotStorageKt;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.protocol.game.ClientboundSetHeldSlotPacket;
 import net.minecraft.world.entity.player.Inventory;

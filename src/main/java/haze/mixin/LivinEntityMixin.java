@@ -23,17 +23,20 @@ public abstract class LivinEntityMixin {
             this.noJumpDelay = 0;
     }
 
-    @Inject(method = "jumpFromGround", at = @At("HEAD"))
-    private void callJumpEvent(CallbackInfo ci) {
+    @Inject(method = "jumpFromGround", at = @At("HEAD"), cancellable = true)
+    private void callJumpEventPre(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
 
         if (entity != Minecraft.getInstance().player)
             return;
 
-        JumpEvent event = JumpEvent.INSTANCE;
+        JumpEvent.Pre event = JumpEvent.Pre.INSTANCE;
         event.setYaw(entity.getYRot());
         event.setHeight(0.42f);
         event.call();
+
+        if (event.getCanceled())
+            ci.cancel();
     }
 
     @ModifyExpressionValue(method = "jumpFromGround", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getYRot()F"))
@@ -43,7 +46,7 @@ public abstract class LivinEntityMixin {
         if (entity != Minecraft.getInstance().player)
             return original;
 
-        return JumpEvent.INSTANCE.getYaw();
+        return JumpEvent.Pre.INSTANCE.getYaw();
     }
 
     @ModifyExpressionValue(method = "getJumpPower(F)F", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getAttributeValue(Lnet/minecraft/core/Holder;)D"))
@@ -53,6 +56,16 @@ public abstract class LivinEntityMixin {
         if (entity != Minecraft.getInstance().player)
             return original;
 
-        return JumpEvent.INSTANCE.getHeight();
+        return JumpEvent.Pre.INSTANCE.getHeight();
+    }
+
+    @Inject(method = "jumpFromGround", at = @At("TAIL"))
+    private void callJumpEventPost(CallbackInfo ci) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+
+        if (entity != Minecraft.getInstance().player)
+            return;
+
+        JumpEvent.Post.INSTANCE.call();
     }
 }

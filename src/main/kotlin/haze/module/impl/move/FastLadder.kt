@@ -1,7 +1,7 @@
 package haze.module.impl.move
 
 import haze.event.Event
-import haze.event.impl.UpdateEvent
+import haze.event.impl.PlayerStateUpdateEvent
 import haze.module.Category
 import haze.module.Module
 import haze.utility.player
@@ -20,7 +20,7 @@ object FastLadder : Module(
     private val spoofGround by boolean("Spoof ground", false)
 
     override fun onEvent(event: Event) {
-        if (event is UpdateEvent.Pre && player.horizontalCollision && player.onClimbable()) {
+        if (event is PlayerStateUpdateEvent.Pre && player.horizontalCollision && player.onClimbable()) {
             when (mode.get()) {
                 modeMotion -> {
                     player.deltaMovement = Vec3(player.deltaMovement.x, motion, player.deltaMovement.z)

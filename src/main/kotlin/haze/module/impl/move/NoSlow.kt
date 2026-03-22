@@ -3,12 +3,12 @@ package haze.module.impl.move
 import haze.event.Event
 import haze.event.impl.PacketEvent
 import haze.event.impl.SlowDownEvent
-import haze.event.impl.UpdateEvent
+import haze.event.impl.PlayerStateUpdateEvent
 import haze.module.Category
 import haze.module.Module
 import haze.utility.connection
 import haze.utility.player
-import haze.utility.player.isFood
+import haze.utility.player.inventory.isFood
 import net.minecraft.core.Direction
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket
 import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket
@@ -41,7 +41,7 @@ object NoSlow : Module(
     override fun onEvent(event: Event) {
         if (event is SlowDownEvent) {
             if (consume.toggled && player.useItem.isFood) {
-                event.slowDown = consumeSlowFactor.toDouble()
+                event.slowDown = consumeSlowFactor
                 event.sprint = consumeSprint
 
                 if (consumeModeGrim && player.tickCount % consumeModeGrimTicks.toInt() != 0) {
@@ -51,7 +51,7 @@ object NoSlow : Module(
             }
 
             if (sword.toggled && player.useItem.useAnimation == ItemUseAnimation.BLOCK) {
-                event.slowDown = swordSlowFactor.toDouble()
+                event.slowDown = swordSlowFactor
                 event.sprint = swordSprint
 
                 if (swordModeGrim && player.tickCount % swordModeGrimTicks.toInt() != 0) {
@@ -61,7 +61,7 @@ object NoSlow : Module(
             }
         }
 
-        if (event is UpdateEvent.Pre) {
+        if (event is PlayerStateUpdateEvent.Pre) {
             if (consume.toggled && player.useItem.isFood && consumeModeIntave) {
                 connection.send(
                     ServerboundPlayerActionPacket(
@@ -73,7 +73,7 @@ object NoSlow : Module(
             }
         }
 
-        if (event is PacketEvent.SEND) {
+        if (event is PacketEvent.Send) {
             val packet = event.packet
 
             if (packet is ServerboundUseItemOnPacket) {

@@ -3,7 +3,7 @@ package haze.module
 import haze.key.KeySaveLoadAble
 import haze.module.impl.combat.*
 import haze.module.impl.combat.AttackAura
-import haze.module.impl.connection.FakePing
+import haze.module.impl.connection.PingSpoof
 import haze.module.impl.misc.*
 import haze.module.impl.move.*
 import haze.module.impl.player.*
@@ -36,15 +36,16 @@ object Modules : SaveLoadAble, KeySaveLoadAble {
     init {
         // combat
         AimAssist
+        AttackAura
+        AutoAttack
         AutoClicker
         Criticals
         KeepSprint
-        AttackAura
         Range
         SprintReset
 
         // connect
-        FakePing
+        PingSpoof
 
         // misc
         AutoRegister

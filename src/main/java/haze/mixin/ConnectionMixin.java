@@ -16,33 +16,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ConnectionMixin {
     @Inject(method = "send(Lnet/minecraft/network/protocol/Packet;)V", at = @At("HEAD"), cancellable = true)
     private void callSendPacketEvent(Packet<?> packet, CallbackInfo ci) {
-        PacketEvent.SEND.INSTANCE.setPacket(packet);
-        PacketEvent.SEND.INSTANCE.setTotalDelay(0);
-        PacketEvent.SEND.INSTANCE.call();
+        if (true) return;
+        ci.cancel();
 
-        PacketHandler.INSTANCE.getPacketQueue().removeIf(it -> {
-            if (System.currentTimeMillis() - it.getSecond() >= PacketEvent.SEND.INSTANCE.getTotalDelay()) {
-                MinecraftExtensionsKt.getConnection().getConnection().send(it.getFirst(), null);
-                return true;
-            }
+        PacketEvent.Send.INSTANCE.setPacket(packet);
+        PacketEvent.Send.INSTANCE.call();
 
-            return false;
-        });
-
-        if (PacketEvent.SEND.INSTANCE.getCanceled()) {
-            ci.cancel();
+        if (PacketEvent.Send.INSTANCE.getCanceled()) {
             return;
         }
 
-        if (PacketEvent.SEND.INSTANCE.getTotalDelay() > 0) {
-            ci.cancel();
-            PacketHandler.INSTANCE.getPacketQueue().add(new Pair<>(packet, System.currentTimeMillis()));
-        }
+        PacketHandler.INSTANCE.handleSentPacket(packet);
     }
 
     @Inject(method = "genericsFtw", at = @At("HEAD"), cancellable = true)
     private static void callReceivePacketEvent(Packet<?> packet, PacketListener packetListener, CallbackInfo ci) {
-        PacketEvent.RECEIVE packetEvent = new PacketEvent.RECEIVE(packet);
+        PacketEvent.Receive packetEvent = new PacketEvent.Receive(packet);
         packetEvent.call();
 
         if (packetEvent.getCanceled())

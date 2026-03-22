@@ -2,7 +2,7 @@ package haze.utility.player
 
 import haze.event.impl.MovementEvent
 import haze.utility.player
-import haze.utility.rotation.CameraRotation
+import haze.utility.player.rotation.CameraRotation
 import net.minecraft.client.player.LocalPlayer
 import net.minecraft.world.entity.player.Input
 import net.minecraft.world.phys.Vec2

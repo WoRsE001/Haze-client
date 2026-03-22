@@ -2,11 +2,10 @@ package haze.mixin;
 
 import haze.event.impl.SendPosEvent;
 import haze.event.impl.SlowDownEvent;
-import haze.event.impl.UpdateEvent;
+import haze.event.impl.PlayerStateUpdateEvent;
 import haze.module.impl.move.AutoSprint;
-import haze.utility.player.PlayerUtilsKt;
-import haze.utility.rotation.CameraRotation;
-import haze.utility.rotation.Rotation;
+import haze.utility.player.PlayerStateUtilKt;
+import haze.utility.player.rotation.CameraRotation;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.ClientRecipeBook;
@@ -64,19 +63,19 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
         LocalPlayer player = (LocalPlayer) (Object) this;
 
         if (player.onGround()) {
-            PlayerUtilsKt.setUtilAirTicks(0);
-            PlayerUtilsKt.setUtilGroundTicks(PlayerUtilsKt.getUtilGroundTicks() + 1);
+            PlayerStateUtilKt.setUtilAirTicks(0);
+            PlayerStateUtilKt.setUtilGroundTicks(PlayerStateUtilKt.getUtilGroundTicks() + 1);
         } else {
-            PlayerUtilsKt.setUtilAirTicks(PlayerUtilsKt.getUtilAirTicks() + 1);
-            PlayerUtilsKt.setUtilGroundTicks(0);
+            PlayerStateUtilKt.setUtilAirTicks(PlayerStateUtilKt.getUtilAirTicks() + 1);
+            PlayerStateUtilKt.setUtilGroundTicks(0);
         }
 
-        UpdateEvent.Pre.INSTANCE.call();
+        PlayerStateUpdateEvent.Pre.INSTANCE.call();
     }
 
     @Inject(method = "aiStep", at = @At("TAIL"))
     private void callUpdateEventPost(CallbackInfo ci) {
-        UpdateEvent.Post.INSTANCE.call();
+        PlayerStateUpdateEvent.Post.INSTANCE.call();
     }
 
     @ModifyExpressionValue(method = "isSlowDueToUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/component/UseEffects;canSprint()Z"))
@@ -95,11 +94,7 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
 
     @Inject(method = "sendPosition", at = @At("HEAD"))
     private void callSendPositionEventPre(CallbackInfo ci) {
-        SendPosEvent.Pre event = SendPosEvent.Pre.INSTANCE;
-        event.setPosition(position());
-        event.setRotation(new Rotation(getYRot(), getXRot()));
-        event.setOnGround(onGround());
-        event.call();
+        SendPosEvent.Pre.INSTANCE.call();
     }
 
     @Inject(method = "sendPosition", at = @At("TAIL"))

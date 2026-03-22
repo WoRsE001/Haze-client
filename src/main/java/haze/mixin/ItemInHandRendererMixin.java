@@ -1,8 +1,8 @@
 package haze.mixin;
 
 import haze.module.impl.visual.InstantItemSwitch;
-import haze.utility.rotation.CameraRotation;
-import haze.utility.slot.FakeSlotStorageKt;
+import haze.utility.player.inventory.slot.FakeSlotStorageKt;
+import haze.utility.player.rotation.CameraRotation;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemInHandRenderer;

@@ -8,11 +8,9 @@ import net.minecraft.client.gui.GuiGraphics
 // created by dicves_recode on 28.11.2025
 object GameLoopEvent : Event
 
-object LegitClickTimingEvent : Event
-
 interface TickEvent {
-    object PRE : CancelAbleEvent()
-    object POST : Event
+    object Pre : CancelAbleEvent()
+    object Post : Event
 }
 
 interface RenderEvent {

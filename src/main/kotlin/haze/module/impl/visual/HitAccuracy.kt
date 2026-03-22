@@ -6,7 +6,7 @@ import haze.utility.math.map
 import haze.utility.math.roundTo
 import haze.utility.mc
 import haze.utility.player
-import haze.utility.rotation.rotation
+import haze.utility.player.rotation.rotation
 import haze.utility.sendMessage
 import haze.utility.target.SortType
 import haze.utility.target.bestTargetBy

@@ -22,7 +22,7 @@ object FastBreak : Module(
         1.0..10.0,
         1.0).visible { noBlockHitDelay && legitNoBlockHitDelay }
     override fun onEvent(event: Event) {
-        if (event is TickEvent.PRE) {
+        if (event is TickEvent.Pre) {
             val accessor = gameMode as MultiPlayerGameModeAccessor
 
             if (accessor.destroyProgress >= destroyOnBreakProgress)

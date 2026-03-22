@@ -2,8 +2,8 @@ package haze.module.impl.combat.attackaura.rotating
 
 import haze.utility.math.random
 import haze.utility.math.randomFloat
-import haze.utility.rotation.PlayerDeltaTracker
-import haze.utility.rotation.Rotation
+import haze.utility.player.rotation.PlayerDeltaTracker
+import haze.utility.player.rotation.Rotation
 
 object ClampDeltaProcessor : AttackAuraDeltaProcessor("Clamp") {
     private val yLimit by numberRange("Y limit", 180.0..180.0, 0.0..180.0, 0.1)

@@ -2,7 +2,7 @@ package haze.module
 
 import haze.gui.RenderAble
 import haze.utility.math.Rect
-import haze.utility.mc
+import haze.utility.render.Render2D
 import net.minecraft.client.gui.GuiGraphics
 
 // created by dicves_recode on 29.11.2025
@@ -20,7 +20,7 @@ enum class Category : RenderAble {
     var scroll = 0f
 
     override fun render(guiGraphics: GuiGraphics, mouseX: Float, mouseY: Float) {
-        guiGraphics.drawString(mc.font, name, (rect.center.x - mc.font.width(name) / 2).toInt(),(rect.center.y - mc.font.lineHeight / 2).toInt(), -1, false)
+        Render2D.drawCentredText(guiGraphics, name, rect.center.x, rect.center.y, -1)
     }
 
     private val mutableModules = mutableSetOf<Module>()

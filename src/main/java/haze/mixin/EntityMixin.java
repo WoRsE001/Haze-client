@@ -2,7 +2,7 @@ package haze.mixin;
 
 import haze.event.impl.MoveRelativeEvent;
 import haze.utility.MinecraftExtensionsKt;
-import haze.utility.rotation.CameraRotation;
+import haze.utility.player.rotation.CameraRotation;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;

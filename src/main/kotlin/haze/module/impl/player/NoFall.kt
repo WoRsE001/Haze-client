@@ -4,6 +4,7 @@ import haze.event.Event
 import haze.event.impl.SendPosEvent
 import haze.module.Category
 import haze.module.Module
+import haze.utility.player
 
 // испорченно SCWGxD в 27.12.2025:19:42
 object NoFall : Module("NoFall", Category.PLAYER) {
@@ -15,7 +16,7 @@ object NoFall : Module("NoFall", Category.PLAYER) {
     override fun onEvent(event: Event) {
         if (event is SendPosEvent.Pre) {
             if (modeSpoofGround) {
-                event.onGround = onGround
+                player.setOnGround(onGround)
             }
         }
     }

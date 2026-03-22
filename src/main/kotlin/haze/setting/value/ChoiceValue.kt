@@ -14,7 +14,7 @@ import kotlin.reflect.KProperty
 class ChoiceValue(name: String, val parent: ConfigureAble) : Value<SubMode?>(name, null) {
     override var rect = Rect(0f, 0f, 0f, 0f)
 
-    val list = mutableListOf<SubMode>()
+    val choices = mutableListOf<SubMode>()
     var isShowChoices = false
 
     override var json: JsonObject
@@ -23,14 +23,14 @@ class ChoiceValue(name: String, val parent: ConfigureAble) : Value<SubMode?>(nam
         }
         set(value) {
             val name = value["Choice"]?.jsonPrimitive?.contentOrNull ?: return
-            this.value = list.first { it.name == name }
+            this.value = choices.first { it.name == name }
         }
 
     override fun render(guiGraphics: GuiGraphics, mouseX: Float, mouseY: Float) {
         val nameModificator = if (isShowChoices) "-" else "+"
-        val sizeX = list.maxOfOrNull { mc.font.width(it.name) }?.plus(mc.font.width("$name:  $nameModificator"))
+        val sizeX = choices.maxOfOrNull { mc.font.width(it.name) }?.plus(mc.font.width("$name:  $nameModificator"))
         rect.size.x = sizeX?.toFloat()!!
-        rect.size.y = 10f * if (isShowChoices) list.size + 1 else 1
+        rect.size.y = 10f * if (isShowChoices) choices.size + 1 else 1
 
         guiGraphics.fill(rect.lt.x.toInt(), rect.lt.y.toInt(), rect.rb.x.toInt(), rect.rb.y.toInt(), 0xff2d2d2d.toInt())
         guiGraphics.drawString(mc.font, "$name: ${value?.name}", rect.lt.x.toInt(), (rect.lt.y + 5 - mc.font.lineHeight / 2).toInt(), -1, false)
@@ -38,7 +38,7 @@ class ChoiceValue(name: String, val parent: ConfigureAble) : Value<SubMode?>(nam
 
         if (isShowChoices) {
             var offsetY = 10f
-            for (mode in list) {
+            for (mode in choices) {
                 guiGraphics.drawString(mc.font, mode.name, rect.lt.x.toInt(), (rect.lt.y + 5 - mc.font.lineHeight / 2 + offsetY).toInt(), -1, false)
                 offsetY += 10f
             }
@@ -53,7 +53,7 @@ class ChoiceValue(name: String, val parent: ConfigureAble) : Value<SubMode?>(nam
         if (button == 0 && rect.isCollided(mouseX, mouseY)) {
             if (isShowChoices) {
                 var offsetY = 10f
-                for (mode in list) {
+                for (mode in choices) {
                     if (rect.isCollided(mouseX, mouseY, rect.lt.x, rect.lt.y + 5 - mc.font.lineHeight / 2 + offsetY, rect.size.x, 10f)) {
                         value = mode
                     }
@@ -71,7 +71,7 @@ class ChoiceValue(name: String, val parent: ConfigureAble) : Value<SubMode?>(nam
 
     open class SubMode(val name: String, val parent: ChoiceValue) {
         init {
-            parent.list.add(this)
+            parent.choices.add(this)
         }
 
         operator fun getValue(thisRef: Any?, property: KProperty<*>) = selected()
