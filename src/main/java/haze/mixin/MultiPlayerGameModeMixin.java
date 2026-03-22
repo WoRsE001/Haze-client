@@ -1,7 +1,7 @@
 package haze.mixin;
 
 import haze.event.impl.AttackEvent;
-import haze.utility.target.TargetSearchUtilKt;
+import haze.utility.target.TargetSearchUtilsKt;
 import net.minecraft.client.multiplayer.MultiPlayerGameMode;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,7 +25,7 @@ public class MultiPlayerGameModeMixin {
         }
 
         if (entity instanceof LivingEntity livingEntity)
-            TargetSearchUtilKt.setLastAttackedTarget(livingEntity);
+            TargetSearchUtilsKt.setLastAttackedTarget(livingEntity);
     }
 
 
