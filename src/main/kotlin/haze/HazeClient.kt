@@ -10,6 +10,7 @@ import haze.utility.mc
 import haze.utility.player.Clicker
 import haze.utility.rotation.PlayerDeltaTracker
 import haze.utility.rotation.RotationHandler
+import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.api.ModInitializer
 import net.minecraft.resources.Identifier
 import org.slf4j.Logger
@@ -19,14 +20,14 @@ import java.io.File
 import kotlin.system.measureTimeMillis
 
 @Suppress("UNUSED_EXPRESSION")
-object HazeClient : ModInitializer, Closeable {
+object HazeClient : ClientModInitializer, Closeable {
 	const val NAME = "Haze"
 	const val MOD_ID = "haze-client"
 
 	val DIR = File(mc.gameDirectory, MOD_ID).apply { mkdirs() }
 	val logger: Logger = LoggerFactory.getLogger(MOD_ID)
 
-	override fun onInitialize() {
+	override fun onInitializeClient() {
 		val startTime = measureTimeMillis {
 			EventCaller
 			KeyCaller

@@ -14,7 +14,7 @@
 	"icon": "assets/haze/mod_icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"main": [
+		"client": [
 			{
 				"value": "haze.HazeClient",
 				"adapter": "kotlin"
