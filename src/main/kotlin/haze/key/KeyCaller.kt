@@ -19,17 +19,16 @@ object KeyCaller : EventListener {
 
     override fun onEvent(event: Event) {
         if (event is KeyEvent) {
-            listeners.forEach {
-                if (!it.shouldListenKeys())
-                    return@forEach
+            for (listener in listeners) {
+                if (listener.shouldListenKeys())
+                    continue
 
-                val keybind = it.keybind
+                val keybind = listener.keybind
 
                 if (keybind == Keybind.NONE)
-                    return@forEach
+                    continue
 
-                if (keybind.key == event.key)
-                    it.onKey(event.action)
+                listener.onKey(event.action)
             }
         }
     }
