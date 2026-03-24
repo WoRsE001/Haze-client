@@ -1,6 +1,6 @@
 package haze.setting.preset
 
-import haze.setting.ConfigureAble
+import haze.setting.Configureable
 import haze.utility.player
 import haze.utility.target.SortType
 import haze.utility.target.bestTargetBy
@@ -8,7 +8,7 @@ import haze.utility.target.validTargets
 import net.minecraft.world.entity.LivingEntity
 
 // Blood! It's everywhere. SCWxD killed you on 08.03.2026 at 9:24.
-class TargetFinder : ConfigureAble("Finding target") {
+class TargetFinder : Configureable("Finding target") {
     private val searchRange by number("Search range", 6.0, 3.0..20.0, 0.1)
     private val sortType = list("Sort type").apply {
         choice("FOV").select()

@@ -1,10 +1,10 @@
 package haze.module.impl.combat.attackaura.rotating
 
-import haze.setting.ConfigureAble
+import haze.setting.Configureable
 import haze.utility.player.rotation.Rotation
 
 // created by dicves_recode on 10.01.2026
-object AttackAuraDeltaProcessing : ConfigureAble("Delta processing") {
+object AttackAuraDeltaProcessing : Configureable("Delta processing") {
     val clamp = tree(ClampDeltaProcessor)
     val basicRandomize = tree(BasicRandomizeDeltaProcessor)
     val linearSmooth = tree(LinearSmoothDeltaProcessor)

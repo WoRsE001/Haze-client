@@ -10,13 +10,13 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.input.MouseButtonEvent
 
 // created by dicves_recode on 14.12.2025
-open class ConfigureAble(
+open class Configureable(
     name: String,
     value: MutableCollection<Value<*>> = mutableListOf(),
 ) : Value<MutableCollection<Value<*>>>(name, value) {
     override var rect = Rect(0f, 0f, 0f, 10f)
 
-    var owner: ConfigureAble? = null
+    var owner: Configureable? = null
     var isShowSettings = false
 
     override var json: JsonObject
@@ -99,7 +99,7 @@ open class ConfigureAble(
     fun isEmpty() = value.isEmpty()
     fun isNotEmpty() = value.isNotEmpty()
 
-    fun <T : ConfigureAble> tree(configureAble: T): T {
+    fun <T : Configureable> tree(configureAble: T): T {
         value.add(configureAble)
         configureAble.owner = this
         return configureAble
@@ -109,13 +109,13 @@ open class ConfigureAble(
         name: String,
         default: Boolean
     ) = BooleanValue(name, default).apply {
-        this@ConfigureAble.value += this
+        this@Configureable.value += this
     }
 
     fun list(
         name: String
     ) = ChoiceValue(name).apply {
-        this@ConfigureAble.value += this
+        this@Configureable.value += this
     }
 
     fun numberRange(
@@ -125,7 +125,7 @@ open class ConfigureAble(
         step: Double,
         suffix: String = ""
     ) = NumberRangeValue(name, default, range, step, suffix).apply {
-        this@ConfigureAble.value += this
+        this@Configureable.value += this
     }
 
     fun number(
@@ -135,26 +135,26 @@ open class ConfigureAble(
         step: Double,
         suffix: String = ""
     ) = NumberValue(name, default, range, step, suffix).apply {
-        this@ConfigureAble.value += this
+        this@Configureable.value += this
     }
 
     fun string(
         name: String,
         default: String
     ) = StringValue(name, default).apply {
-        this@ConfigureAble.value += this
+        this@Configureable.value += this
     }
 
     fun group(
         name: String
-    ) = ConfigureAble(name, mutableListOf()).apply {
-        this@ConfigureAble.value += this
+    ) = Configureable(name, mutableListOf()).apply {
+        this@Configureable.value += this
     }
 
     fun toggleAbleGroup(
         name: String,
         state: Boolean
-    ) = ToggleAbleConfigureAble(name, state).apply {
-        this@ConfigureAble.value += this
+    ) = ToggleableConfigureable(name, state).apply {
+        this@Configureable.value += this
     }
 }

@@ -3,7 +3,7 @@ package haze.setting.preset
 import haze.event.Event
 import haze.event.impl.GameLoopEvent
 import haze.event.impl.LegitClickTimingEvent
-import haze.setting.ConfigureAble
+import haze.setting.Configureable
 import haze.utility.gameMode
 import haze.utility.math.random
 import haze.utility.player
@@ -14,15 +14,20 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.LivingEntity
 
 // Blood! It's everywhere. SCWxD killed you on 22.03.2026 at 6:35.
-class Clicker : ConfigureAble("Clicker") {
+class Clicker(name: String = "Clicker") : Configureable(name) {
     private val clickType = list("Attack type")
     private val clickTypeLegacy = clickType.choice("Legacy").select()
     private val clickTypeModern = clickType.choice("Modern")
+
     private val critType = list("Crit type")
-    private val critTypeNone = critType.choice("None").select()
-    private val critTypeSmart = critType.choice("Smart")
+
+    private val critTypeNone = critType.choice("None")
+    private val critTypeSmart = critType.choice("Smart").select()
     private val critTypeAlways by critType.choice("Always")
-    private val CPS by numberRange("CPS", 20.0..20.0, 0.0..40.0, 0.1).visible { clickTypeLegacy.selected() }
+
+    private val cps by numberRange("CPS", 20.0..20.0, 0.0..40.0, 0.1)
+        .visible { clickTypeLegacy.selected() }
+
     private val attackRange by number("Attack range", 3.0, 0.0..6.0, 0.1)
     private val clickRange by number("Click range", 8.0, 0.0..20.0, 0.1)
 
@@ -32,7 +37,7 @@ class Clicker : ConfigureAble("Clicker") {
 
     fun calculateClicks() {
         if (timer.reached >= delay && shouldAttack()) {
-            delay = 1000f / if (clickTypeModern.selected()) 5f else CPS.random().toFloat()
+            delay = 1000f / if (clickTypeModern.selected()) 5f else cps.random().toFloat()
             clicks++
             timer.reset()
         }

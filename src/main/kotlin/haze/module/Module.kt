@@ -4,7 +4,7 @@ import haze.event.Event
 import haze.event.EventListener
 import haze.key.KeyListener
 import haze.key.Keybind
-import haze.setting.ToggleAbleConfigureAble
+import haze.setting.ToggleableConfigureable
 import haze.utility.math.Rect
 import haze.utility.mc
 import haze.utility.nullCheck
@@ -20,7 +20,7 @@ abstract class Module(
     val category: Category,
     override var keybind: Keybind = Keybind.NONE.copy(),
     defaultToggled: Boolean = false,
-) : ToggleAbleConfigureAble(name, defaultToggled), EventListener, KeyListener {
+) : ToggleableConfigureable(name, defaultToggled), EventListener, KeyListener {
     override var rect = Rect(0f, 0f, 300f, 50f)
 
     init {

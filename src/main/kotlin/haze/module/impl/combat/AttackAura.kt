@@ -34,9 +34,8 @@ object AttackAura : Module(
     }
 
     override fun onEvent(event: Event) {
-        if (event is TickEvent.Pre) {
+        if (event is TickEvent.Pre)
             target = targetFinder.findTarget(target)
-        }
 
         target?.let {
             clicker.processClicks(event, target!!)
@@ -44,9 +43,8 @@ object AttackAura : Module(
         }
     }
 
-    override fun rotate() {
-        target?.let { rotations.rotate(it) }
-    }
+    override fun rotate() =
+        rotations.rotate(target!!)
 
     override fun shouldRotate() = toggled && nullCheck() && target != null
 }

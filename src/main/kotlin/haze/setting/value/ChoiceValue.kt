@@ -1,6 +1,6 @@
 package haze.setting.value
 
-import haze.setting.ConfigureAble
+import haze.setting.Configureable
 import haze.setting.value.ChoiceValue.Choice
 import haze.utility.math.Rect
 import haze.utility.mc
@@ -86,7 +86,7 @@ class ChoiceValue(
 
     open class Choice internal constructor(
         name: String
-    ) : ConfigureAble(name) {
+    ) : Configureable(name) {
         lateinit var parent: ChoiceValue
 
         fun select() = apply {

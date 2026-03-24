@@ -12,7 +12,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.input.MouseButtonEvent
 
 // created by dicves_recode on 09.01.2026
-open class ToggleAbleConfigureAble(name: String, defaultToggled: Boolean) : ConfigureAble(name), ToggleAble {
+open class ToggleableConfigureable(name: String, defaultToggled: Boolean) : Configureable(name), ToggleAble {
     override var rect = Rect(0f, 0f, 10f, 10f)
 
     override var json: JsonObject
