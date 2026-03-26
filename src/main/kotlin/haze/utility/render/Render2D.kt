@@ -14,24 +14,28 @@ import net.minecraft.client.renderer.MappableRingBuffer
 object Render2D {
     private val ubo_map = linkedMapOf<String, MappableRingBuffer>()
 
-    fun drawGradientRect(guiGraphics: GuiGraphics, rect: Rect, color: IntArray) {
+    fun drawGradientRect(guiGraphics: GuiGraphics, x: Float, y: Float, w: Float, h: Float, color: IntArray) {
         val state = SimpleGuiElement(
             guiGraphics,
             CustomRenderPipelines.RECT,
             TextureSetup.noTexture(),
-            rect.lt.x, rect.lt.y, rect.size.x, rect.size.y
+            x, y, w, h
         ) { vertexConsumer ->
-            vertexConsumer.addVertexWith2DPose(guiGraphics.pose(), rect.lt.x, rect.lt.y).setColor(color[0])
-            vertexConsumer.addVertexWith2DPose(guiGraphics.pose(), rect.lb.x, rect.lb.y).setColor(color[1])
-            vertexConsumer.addVertexWith2DPose(guiGraphics.pose(), rect.rb.x, rect.rb.y).setColor(color[2])
-            vertexConsumer.addVertexWith2DPose(guiGraphics.pose(), rect.rt.x, rect.rt.y).setColor(color[3])
+            vertexConsumer.addVertexWith2DPose(guiGraphics.pose(), x, y).setColor(color[0])
+            vertexConsumer.addVertexWith2DPose(guiGraphics.pose(), x, y + h).setColor(color[1])
+            vertexConsumer.addVertexWith2DPose(guiGraphics.pose(), x + w, y + h).setColor(color[2])
+            vertexConsumer.addVertexWith2DPose(guiGraphics.pose(), x + w, y).setColor(color[3])
         }
 
         guiGraphics.guiRenderState.submitGuiElement(state)
     }
 
+    fun drawRect(guiGraphics: GuiGraphics, x: Float, y: Float, w: Float, h: Float, color: Int) {
+        drawGradientRect(guiGraphics, x, y, w, h, intArrayOf(color, color, color, color))
+    }
+
     fun drawRect(guiGraphics: GuiGraphics, rect: Rect, color: Int) {
-        drawGradientRect(guiGraphics, rect, intArrayOf(color, color, color, color))
+        drawGradientRect(guiGraphics, rect.lt.x, rect.lt.y, rect.size.x, rect.size.y, intArrayOf(color, color, color, color))
     }
 
     fun drawText(guiGraphics: GuiGraphics, text: String, x: Float, y: Float, color: Int) {

@@ -8,6 +8,7 @@ import haze.setting.ToggleableConfigureable
 import haze.utility.math.Rect
 import haze.utility.mc
 import haze.utility.nullCheck
+import haze.utility.render.Render2D
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -21,7 +22,7 @@ abstract class Module(
     override var keybind: Keybind = Keybind.NONE.copy(),
     defaultToggled: Boolean = false,
 ) : ToggleableConfigureable(name, defaultToggled), EventListener, KeyListener {
-    override var rect = Rect(0f, 0f, 300f, 50f)
+    override var rect = Rect(0f, 0f, 230f, 50f)
 
     init {
         registerToEvents()
@@ -44,8 +45,8 @@ abstract class Module(
         }
 
     override fun render(guiGraphics: GuiGraphics, mouseX: Float, mouseY: Float) {
-        guiGraphics.fill((rect.lt.x + 5).toInt(), (rect.lt.y + 5).toInt(), (rect.rb.x - 5).toInt(), (rect.lt.y + getHeight() - 5).toInt(), 0xff767676.toInt())
-        guiGraphics.drawString(mc.font, name, (rect.lc.x + 10).toInt(),(rect.lc.y - mc.font.lineHeight / 2).toInt(), if (toggled) 0x80ff8000.toInt() else 0xff000000.toInt(), false)
+        Render2D.drawRect(guiGraphics, rect, 0xFF3F3B45.toInt())
+        Render2D.drawText(guiGraphics, name, rect.lc.x + 10, rect.lc.y - mc.font.lineHeight / 2, if (toggled) 0xFFD9D9D9.toInt() else 0xFF1E1C21.toInt())
 
         if (isShowSettings) {
             var offsetY = rect.size.y

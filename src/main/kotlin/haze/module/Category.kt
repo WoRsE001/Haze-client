@@ -2,6 +2,7 @@ package haze.module
 
 import haze.gui.RenderAble
 import haze.utility.math.Rect
+import haze.utility.mc
 import haze.utility.render.Render2D
 import net.minecraft.client.gui.GuiGraphics
 
@@ -15,7 +16,7 @@ enum class Category : RenderAble {
     VISUAL,
     WORLD;
 
-    override var rect = Rect(0f, 0f, 100f, 35.7f)
+    override var rect = Rect(0f, 0f, 50f, 9f)
 
     var scroll = 0f
 
